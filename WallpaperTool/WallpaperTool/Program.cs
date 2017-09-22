@@ -11,9 +11,10 @@ namespace WallpaperTool
 {
     static class Program
     {
-        static void Main(String[] args)
+        [STAThread]
+        static void Main()
         {
-
+            Application.Run(new Form1());
         }
     }
 }
