@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
+using Microsoft.DirectX.AudioVideoPlayback;
 
 namespace WallpaperTool
 {
@@ -20,8 +21,9 @@ namespace WallpaperTool
             this.FormBorderStyle = FormBorderStyle.None;
             this.Location = new Point(0, 0);
             this.Size = Screen.PrimaryScreen.Bounds.Size;
-
+            VideoBox();
             DrawImage();
+
         }
 
         // rainbow background
@@ -37,7 +39,7 @@ namespace WallpaperTool
 
         private void DrawImage()
         {
-            pictureBox1.Image = System.Drawing.Image.FromFile(@"C:\Users\dsm2016\Pictures\600.jpg");
+            pictureBox1.Image = System.Drawing.Image.FromFile(@"D:\DSM10121HKH\Pictures\images\asuna\wallpaper\301609.jpg");
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.Location = this.Location;
             pictureBox1.Size = this.Size;
@@ -46,6 +48,23 @@ namespace WallpaperTool
         private void Form1_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void VideoBox()
+        {
+            OpenFileDialog of = new OpenFileDialog();
+            of.FileName = @"C:\Users\DSM10121\Downloads\CA.mp4";
+            Video video = new Video(@"C:\Users\DSM10121\Downloads\CA.mp4")
+            {
+                Owner = this,
+                Size = this.Size
+            };
+            video.Play();
         }
     }
 }
