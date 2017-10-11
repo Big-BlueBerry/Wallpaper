@@ -20,10 +20,11 @@ namespace WallpaperTool
             this.FormBorderStyle = FormBorderStyle.None;
             this.Location = new Point(0, 0);
             this.Size = Screen.PrimaryScreen.Bounds.Size;
-            
 
+            DrawImage();
         }
 
+        // rainbow background
         protected override void OnPaint(PaintEventArgs e)
         {
             LinearGradientBrush brush = new LinearGradientBrush(this.ClientRectangle, Color.Black, Color.Black, 0, false);
@@ -33,6 +34,18 @@ namespace WallpaperTool
             brush.InterpolationColors = cb;
             e.Graphics.FillRectangle(brush, this.ClientRectangle);
         }
-        
+
+        private void DrawImage()
+        {
+            pictureBox1.Image = System.Drawing.Image.FromFile(@"C:\Users\dsm2016\Pictures\600.jpg");
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox1.Location = this.Location;
+            pictureBox1.Size = this.Size;
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
