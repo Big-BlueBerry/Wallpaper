@@ -8,11 +8,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
+using System.IO;
+using System.Threading;
+using ShockwaveFlashObjects;
 
 namespace WallpaperTool
 {
     public partial class Form1 : Form
     {
+        int index;
+        String[] images;
+
         public Form1()
         {
             InitializeComponent();
@@ -21,7 +27,12 @@ namespace WallpaperTool
             this.Location = new Point(0, 0);
             this.Size = Screen.PrimaryScreen.Bounds.Size;
 
-            DrawImage();
+            this.pictureBox1.BackColor = Color.Transparent;
+
+            index = 0;
+
+            images = GetImages(@"C:\Users\dsm2016\Pictures\wallpaper");
+            SlideShow();
         }
 
         // rainbow background
@@ -35,9 +46,13 @@ namespace WallpaperTool
             e.Graphics.FillRectangle(brush, this.ClientRectangle);
         }
 
-        private void DrawImage()
+
+
+        // Show image from local path image
+        private void DrawImage(String path)
         {
-            pictureBox1.Image = System.Drawing.Image.FromFile(@"C:\Users\dsm2016\Pictures\600.jpg");
+            pictureBox1.Image?.Dispose();
+            pictureBox1.Image = Image.FromFile(@path);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.Location = this.Location;
             pictureBox1.Size = this.Size;
@@ -46,6 +61,44 @@ namespace WallpaperTool
         private void Form1_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        // path로 부터 모든 이미지 파일(path)를 가져와 String[]으로 return
+        private String[] GetImages(String path)
+        {
+            //List<string> images = new List<string>();
+            String[] names = Directory.GetFiles(path);
+            String[] images = (from name in names
+                         where name.EndsWith(".png") || name.EndsWith(".jpg") || name.EndsWith(".bmp") || name.EndsWith(".jpeg")
+                         select name).ToArray();
+
+            return images;
+        }
+
+        // term 만큼 이미지를 바꿔가며 보여줌 
+        private void SlideShow()
+        {
+            int term = 1000;
+
+            System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
+            timer.Interval = term;
+            timer.Tick += ChangeImage;
+            timer.Start();            
+        }
+
+        // term 마다 실행되면서 이미지를 바꿈
+        private void ChangeImage(object sender, EventArgs e)
+        {
+            index = index >= images.Length ? 0 : index;
+            DrawImage(images[index]);
+            index += 1;
+            if (!pictureBox1.Enabled)
+                pictureBox1.Enabled = true;
         }
     }
 }
