@@ -16,6 +16,9 @@ namespace WallpaperTool
 {
     public partial class Form1 : Form
     {
+        int index;
+        String[] images;
+
         public Form1()
         {
             InitializeComponent();
@@ -24,8 +27,12 @@ namespace WallpaperTool
             this.Location = new Point(0, 0);
             this.Size = Screen.PrimaryScreen.Bounds.Size;
 
-            String[] images = GetImages(@"C:\Users\dsm2016\Pictures\wallpaper");
-            SlideShow(images);
+            this.pictureBox1.BackColor = Color.Transparent;
+
+            index = 0;
+
+            images = GetImages(@"C:\Users\dsm2016\Pictures\wallpaper");
+            SlideShow();
         }
 
         // rainbow background
@@ -39,17 +46,13 @@ namespace WallpaperTool
             e.Graphics.FillRectangle(brush, this.ClientRectangle);
         }
 
-        // Play youtube video from internet
-        private void PlayYoutube()
-        {
-            axShockwaveFlash1.Movie= "http://youtube.com/v/oyEuk8j8imI";
-            axShockwaveFlash1.Play();
-        }
+
 
         // Show image from local path image
         private void DrawImage(String path)
         {
-            pictureBox1.Image = System.Drawing.Image.FromFile(@path);
+            pictureBox1.Image?.Dispose();
+            pictureBox1.Image = Image.FromFile(@path);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.Location = this.Location;
             pictureBox1.Size = this.Size;
@@ -77,21 +80,25 @@ namespace WallpaperTool
             return images;
         }
 
-        private void SlideShow(String[] images)
+        // term 만큼 이미지를 바꿔가며 보여줌 
+        private void SlideShow()
         {
-            DrawImage(images[0]);
+            int term = 1000;
 
-            // 1000 == 1초
-            //    Thread.Sleep(100000);
-            DrawImage(images[1]);
+            System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
+            timer.Interval = term;
+            timer.Tick += ChangeImage;
+            timer.Start();            
+        }
 
-            //// 1000 == 1초
-            //Thread.Sleep(100000);
-            //DrawImage(images[2]);
-
-            //// 1000 == 1초
-            //Thread.Sleep(100000);
-
+        // term 마다 실행되면서 이미지를 바꿈
+        private void ChangeImage(object sender, EventArgs e)
+        {
+            index = index >= images.Length ? 0 : index;
+            DrawImage(images[index]);
+            index += 1;
+            if (!pictureBox1.Enabled)
+                pictureBox1.Enabled = true;
         }
     }
 }
