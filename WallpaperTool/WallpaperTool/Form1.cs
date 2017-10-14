@@ -31,8 +31,10 @@ namespace WallpaperTool
 
             index = 0;
 
-            images = GetImages(@"C:\Users\dsm2016\Pictures\wallpaper");
-            SlideShow();
+            //images = GetImages(@"C:\Users\dsm2016\Pictures\wallpaper");
+            //SlideShow();
+
+            webBrowser1.Navigate("http://www.youtube.com");
         }
 
         // rainbow background
