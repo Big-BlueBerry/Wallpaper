@@ -8,8 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
-using Microsoft.DirectX.AudioVideoPlayback;
-
+using SharpDX.MediaFoundation;
+using SharpDX;
 namespace WallpaperTool
 {
     public partial class Form1 : Form
@@ -19,20 +19,19 @@ namespace WallpaperTool
             InitializeComponent();
             BehindDesktopIcon.FixBehindDesktopIcon(this.Handle);
             this.FormBorderStyle = FormBorderStyle.None;
-            this.Location = new Point(0, 0);
+            this.Location = new System.Drawing.Point(0, 0);
             this.Size = Screen.PrimaryScreen.Bounds.Size;
             VideoBox();
             DrawImage();
-
         }
 
         // rainbow background
         protected override void OnPaint(PaintEventArgs e)
         {
-            LinearGradientBrush brush = new LinearGradientBrush(this.ClientRectangle, Color.Black, Color.Black, 0, false);
+            LinearGradientBrush brush = new LinearGradientBrush(this.ClientRectangle, System.Drawing.Color.Black, System.Drawing.Color.Black, 0, false);
             ColorBlend cb = new ColorBlend();
             cb.Positions = new[] { 0, 1 / 6f, 2 / 6f, 3 / 6f, 4 / 6f, 5 / 6f, 1 };
-            cb.Colors = new[] { Color.Red, Color.Orange, Color.Yellow, Color.Green, Color.Blue, Color.Navy, Color.Purple };
+            cb.Colors = new[] { System.Drawing.Color.Red, System.Drawing.Color.Orange, System.Drawing.Color.Yellow, System.Drawing.Color.Green, System.Drawing.Color.Blue, System.Drawing.Color.Navy, System.Drawing.Color.Purple };
             brush.InterpolationColors = cb;
             e.Graphics.FillRectangle(brush, this.ClientRectangle);
         }
@@ -57,14 +56,12 @@ namespace WallpaperTool
 
         private void VideoBox()
         {
-            OpenFileDialog of = new OpenFileDialog();
-            of.FileName = @"C:\Users\DSM10121\Downloads\CA.mp4";
-            Video video = new Video(@"C:\Users\DSM10121\Downloads\CA.mp4")
-            {
-                Owner = this,
-                Size = this.Size
-            };
-            video.Play();
+            
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }
