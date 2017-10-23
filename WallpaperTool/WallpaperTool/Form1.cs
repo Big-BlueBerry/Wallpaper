@@ -10,6 +10,9 @@ using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 using SharpDX.MediaFoundation;
 using SharpDX;
+using Microsoft.DirectX;
+using Microsoft.DirectX.AudioVideoPlayback;
+
 namespace WallpaperTool
 {
     public partial class Form1 : Form
@@ -53,16 +56,15 @@ namespace WallpaperTool
         {
 
         }
+
         private void playVideo()
         {
             Video ourVideo = new Video(@"C:\Users\DSM10121\Downloads\CA.mp4");
-            Form form1 = new Form();
-            form1.Show();
-            form1.WindowState = FormWindowState.Maximized;
-            ourVideo.Owner = form1;
+            ourVideo.Owner = this.panel1;
             ourVideo.Size = new Size(1920, 1080);
             ourVideo.Play();
         }
+
         private void VideoBox()
         {
             
