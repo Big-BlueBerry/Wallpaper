@@ -21,7 +21,7 @@ namespace WallpaperTool
             this.FormBorderStyle = FormBorderStyle.None;
             this.Location = new System.Drawing.Point(0, 0);
             this.Size = Screen.PrimaryScreen.Bounds.Size;
-            VideoBox();
+            playVideo();
             DrawImage();
         }
 
@@ -53,7 +53,16 @@ namespace WallpaperTool
         {
 
         }
-
+        private void playVideo()
+        {
+            Video ourVideo = new Video(@"C:\Users\DSM10121\Downloads\CA.mp4");
+            Form form1 = new Form();
+            form1.Show();
+            form1.WindowState = FormWindowState.Maximized;
+            ourVideo.Owner = form1;
+            ourVideo.Size = new Size(1920, 1080);
+            ourVideo.Play();
+        }
         private void VideoBox()
         {
             
